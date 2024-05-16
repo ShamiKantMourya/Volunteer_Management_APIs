@@ -16,7 +16,7 @@ router.route("/").get(GetAllVolunteers);
 router.route("/").post(AddVolunteer);
 
 //update volunteer
-router.route("/:volunteerId").post(updateVolunteer);
+router.route("/:volunteerId").put(updateVolunteer);
 
 //delete volunteer
 router.route("/:volunteerId").delete(deleteVolunteer);

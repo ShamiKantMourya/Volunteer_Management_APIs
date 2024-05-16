@@ -19,6 +19,6 @@ router.route("/").post(AddEvent);
 router.route("/:eventId").delete(DeleteEvent);
 
 //Update events
-router.route("/:eventId").post(UpdateEvent);
+router.route("/:eventId").put(UpdateEvent);
 
 module.exports = router;
