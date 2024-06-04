@@ -4,18 +4,12 @@ const Event = require("../models/event.model");
 exports.GetAllEvents = async (req, res) => {
   try {
     const events = await Event.find({});
-    if (events) {
-      res.status(200).json({
-        success: true,
-        count: events.length,
-        data: events,
-      });
-    } else {
-      res.status(404).json({
-        success: false,
-        message: "No events found",
-      });
-    }
+
+    res.status(200).json({
+      success: true,
+      count: events.length,
+      data: events,
+    });
   } catch (error) {
     res.status(500).json({
       success: false,
@@ -31,18 +25,11 @@ exports.AddEvent = async (req, res) => {
     const data = req.body;
     const newEvent = new Event(data);
     const savedEvent = await newEvent.save();
-    if (savedEvent) {
-      res.status(201).json({
-        success: true,
-        message: "Event added successfully",
-        data: savedEvent,
-      });
-    } else {
-      res.status(400).json({
-        success: false,
-        message: "Failed to add event",
-      });
-    }
+    res.status(201).json({
+      success: true,
+      message: "Event added successfully",
+      data: savedEvent,
+    });
   } catch (error) {
     res.status(500).json({
       success: false,
@@ -55,19 +42,14 @@ exports.AddEvent = async (req, res) => {
 exports.DeleteEvent = async (req, res) => {
   try {
     const eventId = req.params.eventId;
+    const event = await Event.findById(eventId);
     const deletedEvent = await Event.findByIdAndDelete(eventId);
-    if (deletedEvent) {
-      res.status(200).json({
-        success: true,
-        message: "Event deleted successfully",
-        data: deletedEvent,
-      });
-    } else {
-      res.status(404).json({
-        success: false,
-        message: "Event not found",
-      });
-    }
+    await event.save();
+    res.status(200).json({
+      success: true,
+      message: "Event deleted successfully",
+      data: deletedEvent,
+    });
   } catch (error) {
     res.status(500).json({
       success: false,
@@ -81,21 +63,16 @@ exports.UpdateEvent = async (req, res) => {
   try {
     const eventId = req.params.eventId;
     const eventData = req.body;
+    const event = await Event.findById(eventId);
     const updatedEvent = await Event.findByIdAndUpdate(eventId, eventData, {
       new: true,
     });
-    if (updatedEvent) {
-      res.status(200).json({
-        success: true,
-        message: "Event updated successfully",
-        data: updatedEvent,
-      });
-    } else {
-      res.status(404).json({
-        success: false,
-        message: "Event not found",
-      });
-    }
+    await event.save();
+    res.status(200).json({
+      success: true,
+      message: "Event updated successfully",
+      data: updatedEvent,
+    });
   } catch (error) {
     res.status(500).json({
       success: false,

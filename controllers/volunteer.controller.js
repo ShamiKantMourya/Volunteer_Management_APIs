@@ -4,17 +4,10 @@ const Volunteer = require("../models/volunteer.model");
 exports.GetAllVolunteers = async (req, res) => {
   try {
     const volunteers = await Volunteer.find({});
-    if (volunteers) {
-      res.status(200).json({
-        success: true,
-        data: volunteers,
-      });
-    } else {
-      res.status(404).json({
-        success: false,
-        message: "No volunteers found",
-      });
-    }
+    res.status(200).json({
+      success: true,
+      data: volunteers,
+    });
   } catch (error) {
     res.status(500).json({
       success: false,
@@ -29,18 +22,11 @@ exports.AddVolunteer = async (req, res) => {
     const data = req.body;
     const newVolunteer = new Volunteer(data);
     const savedVolunteer = await newVolunteer.save();
-    if (savedVolunteer) {
-      res.status(201).json({
-        success: true,
-        message: "Volunteer added successfully",
-        data: savedVolunteer,
-      });
-    } else {
-      res.status(400).json({
-        success: false,
-        message: "Failed to add volunteer",
-      });
-    }
+    res.status(201).json({
+      success: true,
+      message: "Volunteer added successfully",
+      data: savedVolunteer,
+    });
   } catch (error) {
     res.status(500).json({
       success: false,
@@ -61,18 +47,11 @@ exports.updateVolunteer = async (req, res) => {
         new: true,
       },
     );
-    if (updatedVolunteer) {
-      res.status(200).json({
-        success: true,
-        message: "Volunteer updated successfully",
-        data: updatedVolunteer,
-      });
-    } else {
-      res.status(404).json({
-        success: false,
-        message: "Volunteer not found",
-      });
-    }
+    res.status(200).json({
+      success: true,
+      message: "Volunteer updated successfully",
+      data: updatedVolunteer,
+    });
   } catch (error) {
     res.status(500).json({
       success: false,
@@ -86,18 +65,11 @@ exports.deleteVolunteer = async (req, res) => {
   try {
     const volunteerId = req.params.volunteerId;
     const deletedVolunteer = await Volunteer.findByIdAndDelete(volunteerId);
-    if (deletedVolunteer) {
-      res.status(200).json({
-        success: true,
-        message: "Volunteer deleted successfully",
-        data: deletedVolunteer,
-      });
-    } else {
-      res.status(404).json({
-        success: false,
-        message: "Volunteer not found",
-      });
-    }
+    res.status(200).json({
+      success: true,
+      message: "Volunteer deleted successfully",
+      data: deletedVolunteer,
+    });
   } catch (error) {
     res.status(500).json({
       success: false,
